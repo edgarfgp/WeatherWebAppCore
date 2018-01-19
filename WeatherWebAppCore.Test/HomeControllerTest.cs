@@ -11,12 +11,12 @@ namespace WeatherWebAppCore.Test
     public class HomeControllerTest
     {
 
-        private IWeatherService weatherService;
+        
 
         [TestInitialize]
         public void Setup(IWeatherService weatherService)
         {
-            this.weatherService = weatherService;
+           
 
 
         }
@@ -24,7 +24,7 @@ namespace WeatherWebAppCore.Test
         [TestMethod]
         public void HomeControllerIndex()
         {
-            var expected = weatherService.MockGetWeatherByLocation();
+           
 
             
             

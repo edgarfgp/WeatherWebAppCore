@@ -17,6 +17,11 @@ namespace WeatherWebAppCore.Service
             _apiService = new ApiService();
         }
 
+        public IEnumerable<WeatherObject> MockGetWeatherByLocation()
+        {
+            return null;
+        }
+
         async Task<WeatherObject> IWeatherService.GetWeatherByLocation(string city)
         {
             try

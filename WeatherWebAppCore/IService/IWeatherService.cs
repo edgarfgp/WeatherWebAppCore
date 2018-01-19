@@ -9,5 +9,8 @@ namespace WeatherWebAppCore.IService
    public  interface IWeatherService
     {
         Task<WeatherObject> GetWeatherByLocation(string city);
+
+        IEnumerable<WeatherObject> MockGetWeatherByLocation();
+
     }
 }

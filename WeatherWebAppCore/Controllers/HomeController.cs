@@ -16,17 +16,17 @@ namespace WeatherWebAppCore.Controllers
             this.weatherService = weatherService;
         }
 
-        public   ViewResult Index()
+        public IActionResult Index()
         {
-            ViewBag.Title = "Home View Page";
+            ViewBag.Title = "Weather Console App";
 
-            var weatherTask = weatherService.GetWeatherByLocation("Madrid");
-            
-           Task.WhenAll(weatherTask);
+            var weatherTask = weatherService.GetCities();
+
+            Task.WhenAll(weatherTask);
 
             var currentWeather = weatherTask.Result;
 
-            return  View( currentWeather);
+            return View(currentWeather);
         }
     }
 }

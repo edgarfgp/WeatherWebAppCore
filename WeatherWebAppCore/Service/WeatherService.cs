@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeatherWebAppCore.Constants;
 using WeatherWebAppCore.IService;
-using WeatherWebAppCore.Model;
+using WeatherWebAppCore.Models;
 
 namespace WeatherWebAppCore.Service
 {
@@ -17,17 +17,27 @@ namespace WeatherWebAppCore.Service
             _apiService = new ApiService();
         }
 
-        public IEnumerable<WeatherObject> MockGetWeatherByLocation()
-        {
-            return null;
-        }
-
-        async Task<WeatherObject> IWeatherService.GetWeatherByLocation(string city)
+        async Task<City> IWeatherService.GetCities()
         {
             try
             {
 
-                return await _apiService.GetApi<WeatherObject>(ApiUris.WeatherByCity_GET, city);
+                return await _apiService.GetApi<City>(ApiUris.Cities_GET);
+            }
+            catch (Exception cex)
+            {
+
+                throw cex;
+            }
+
+        }
+
+        async Task<Day> IWeatherService.GetDaysForCity(string cityName)
+        {
+            try
+            {
+
+               return  await _apiService.GetApi<Day>(ApiUris.DaysForCity_GET, cityName);
             }
             catch (Exception cex)
             {
@@ -35,5 +45,7 @@ namespace WeatherWebAppCore.Service
                 throw cex;
             }
         }
+
+     
     }
 }

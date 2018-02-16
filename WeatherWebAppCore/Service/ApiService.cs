@@ -6,8 +6,8 @@ using WeatherWebAppCore.Constants;
 using WeatherWebAppCore.Exceptions;
 using WeatherWebAppCore.IService;
 
-using static WeatherWebAppCore.Constants.Units;
 using static WeatherWebAppCore.Constants.ApiConstants;
+using WeatherWebAppCore.Models;
 
 namespace WeatherWebAppCore.Service
 {
@@ -18,11 +18,13 @@ namespace WeatherWebAppCore.Service
 
         }
 
-        public async Task<T> GetApi<T>(ApiUris apiUris, string city)
+        public async Task<T> GetApi<T>(ApiUris apiUris, string city= "")
         {
             var uri = FabricateUrl(apiUris, city);
             return await GetApi<T>(apiUris, uri);
         }
+
+       
 
         private async Task<T> GetApi<T>(ApiUris apiUris, Uri uri)
         {
@@ -40,10 +42,10 @@ namespace WeatherWebAppCore.Service
             }
         }
 
-        private Uri FabricateUrl(ApiUris apiUris, string args)
+        private Uri FabricateUrl(ApiUris apiUris, string args = null)
         {
 
-            return new Uri($"{API_PROTOCOL}://{API_HOST}/{GetWeatherByCity}{args}&units={Metric}&appid={ApiKey}", UriKind.Absolute);
+            return new Uri($"{API_PROTOCOL}://{API_HOST}/api/cities", UriKind.Absolute);
 
         }
     }

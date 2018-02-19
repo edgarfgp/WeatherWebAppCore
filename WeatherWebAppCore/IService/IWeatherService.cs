@@ -9,6 +9,8 @@ namespace WeatherWebAppCore.IService
    public  interface IWeatherService
     {
         Task<List<City>> GetCities();
+        void CreateCity(CityDto cityDto);
+
 
 
 

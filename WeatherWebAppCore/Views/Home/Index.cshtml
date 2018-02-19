@@ -1,10 +1,9 @@
-﻿@model WeatherWebAppCore.ViewModels.HomeViewModel
-
-<h1>@Model.Title</h1>
+﻿
+<h2 class="text-info">@Model.Title</h2>
 
 @foreach (var item in Model.Cities)
 {
-    <p>@item.Id</p>
+    
     <p>@item.Location</p>
 }
 

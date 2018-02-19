@@ -19,6 +19,10 @@ namespace WeatherWebAppCore
         {
             services.AddSingleton<IWeatherService, WeatherService>();
             services.AddSingleton<IApiService, ApiService>();
+
+
+            services.AddMemoryCache();
+
             services.AddMvc();
 
         }

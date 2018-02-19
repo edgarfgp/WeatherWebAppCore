@@ -17,6 +17,19 @@ namespace WeatherWebAppCore.Service
            apiService = new ApiService();
         }
 
+        public async void CreateCity(CityDto cityDto)
+        {
+            try
+            {
+              await  apiService.PostAsync<CityDto>(cityDto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         async Task<List<City>> IWeatherService.GetCities()
         {
             try

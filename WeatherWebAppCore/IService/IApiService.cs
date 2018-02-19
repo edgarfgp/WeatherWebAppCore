@@ -9,5 +9,7 @@ namespace WeatherWebAppCore.IService
     public interface IApiService
     {
         Task<List<T>> GetApi<T>();
+        Task<bool> PostAsync<T>(T t);
+        
     }
 }

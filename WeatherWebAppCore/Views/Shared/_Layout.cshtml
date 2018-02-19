@@ -3,22 +3,24 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Weather Console</title>
+    <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/content/site.css" rel="stylesheet" />
 </head>
-<body>
+<body class="jumbotron">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    
                     <li><a asp-controller="Home" asp-action="Index" class="navbar-brand">Home</a></li>
+                    <li><a asp-controller="Api" asp-action="Index" class="navbar-brand">API</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        <div class="row">
+        <div class="row text-center">
             @RenderBody()
         </div>
     </div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,36 +16,52 @@ namespace WeatherWebAppCore.Controllers
     public class HomeController : Controller
     {
         private IWeatherService weatherService;
+        private IMemoryCache memoryCache;
 
-        public HomeController(IWeatherService weatherService)
+        private ILogger<HomeController> logger;
+
+        public HomeController(IWeatherService weatherService, IMemoryCache memoryCache, ILogger<HomeController> logger)
         {
             this.weatherService = weatherService;
+            this.memoryCache = memoryCache;
+            this.logger = logger;
 
 
         }
 
         public async Task<IActionResult> Index()
         {
-           
             ViewBag.Title = "Home";
-
-            HomeViewModel homeViewModel = new HomeViewModel();
-
-            var CitiesFromApi = await weatherService.GetCities();
-
-            homeViewModel = new HomeViewModel()
+            var cacheKey = "cities";
+            if (memoryCache.TryGetValue(cacheKey, out HomeViewModel homeViewModel))
             {
-                
-                Title = "Cities",
-                Cities = CitiesFromApi
+                homeViewModel.Message = "THE CACHE IS ACTIVE";
+                return View(homeViewModel);
+            }
+            else
+            {
+                var citiesFromApi = await weatherService.GetCities();
+                homeViewModel = new HomeViewModel
+                {
+                    Title = "Cities",
+                    Message = "THE CACHE IS EXPIRED",
+                    Cities = citiesFromApi
 
-            };
+                };
 
-            return View(homeViewModel);
+                memoryCache.Set(cacheKey, homeViewModel, new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(DateTimeOffset.Now.AddSeconds(20))
+                .RegisterPostEvictionCallback((key, value, reason, state) => 
+                {
+                    logger.LogInformation($"Esto es una prueba{key}----{value}---{reason}---{state}");
+                }));
+                return View(homeViewModel);
+            }
+
         }
 
-        
 
-        
+
+
     }
 }

@@ -8,6 +8,6 @@ namespace WeatherWebAppCore.IService
 {
     public interface IApiService
     {
-        Task<T> GetApi<T>(ApiUris apiUris, string city);
+        Task<List<T>> GetApi<T>();
     }
 }

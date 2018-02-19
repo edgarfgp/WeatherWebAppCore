@@ -13,9 +13,11 @@ namespace WeatherWebAppCore.Constants
     }
     public class ApiConstants
     {
-        public const string API_HOST = "weatherapicore.azurewebsites.net";
+        public const string API_URL = "https://weatherapicore.azurewebsites.net/api/cities";
 
-        public const string API_PROTOCOL = "https";
+        
+
+
 
 
 

@@ -5,28 +5,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeatherWebAppCore.Extensions;
 using WeatherWebAppCore.IService;
+using WeatherWebAppCore.ViewModels;
 
 namespace WeatherWebAppCore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IWeatherService weatherService;
+        private  IWeatherService weatherService;
         public HomeController(IWeatherService weatherService)
         {
             this.weatherService = weatherService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.Title = "Weather Console App";
 
-            var weatherTask = weatherService.GetCities();
+            var CitiesFromApi = await weatherService.GetCities();
 
-            Task.WhenAll(weatherTask);
+            var homeViewModel = new HomeViewModel()
+            {
+                Title = "Welcome",
+                Cities = CitiesFromApi
 
-            var currentWeather = weatherTask.Result;
-
-            return View(currentWeather);
+            };
+            return View(homeViewModel);
         }
     }
 }

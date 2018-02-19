@@ -8,8 +8,7 @@ namespace WeatherWebAppCore.IService
 {
    public  interface IWeatherService
     {
-        Task<City> GetCities();
-        Task<Day> GetDaysForCity(string cityName);
+        Task<List<City>> GetCities();
 
 
 

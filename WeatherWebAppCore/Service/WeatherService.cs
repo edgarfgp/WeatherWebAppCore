@@ -10,19 +10,19 @@ namespace WeatherWebAppCore.Service
 {
     public class WeatherService : IWeatherService
     {
-        private ApiService _apiService;
+        private ApiService apiService;
 
         public WeatherService()
         {
-            _apiService = new ApiService();
+           apiService = new ApiService();
         }
 
-        async Task<City> IWeatherService.GetCities()
+        async Task<List<City>> IWeatherService.GetCities()
         {
             try
             {
 
-                return await _apiService.GetApi<City>(ApiUris.Cities_GET);
+                return await apiService.GetApi<City>();
             }
             catch (Exception cex)
             {
@@ -32,20 +32,6 @@ namespace WeatherWebAppCore.Service
 
         }
 
-        async Task<Day> IWeatherService.GetDaysForCity(string cityName)
-        {
-            try
-            {
-
-               return  await _apiService.GetApi<Day>(ApiUris.DaysForCity_GET, cityName);
-            }
-            catch (Exception cex)
-            {
-
-                throw cex;
-            }
-        }
-
-     
+       
     }
 }

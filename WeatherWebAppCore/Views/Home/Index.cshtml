@@ -6,6 +6,12 @@
 @foreach (var item in Model.Cities)
 {
     
-    <p>@item.Location</p>
+    <p>
+        <a asp-controller="Home"
+           asp-action="Details"
+           asp-route-id="@item.Id">
+            @item.Location
+        </a>
+    </p>
 }
 

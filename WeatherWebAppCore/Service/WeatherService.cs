@@ -14,14 +14,27 @@ namespace WeatherWebAppCore.Service
 
         public WeatherService()
         {
-           apiService = new ApiService();
+            apiService = new ApiService();
         }
 
         public async void CreateCity(CityDto cityDto)
         {
             try
             {
-              await  apiService.PostAsync<CityDto>(cityDto);
+                await apiService.PostAsync<CityDto>(cityDto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<City> GetCityById(Guid id)
+        {
+            try
+            {
+                return await apiService.GetApi<City>(id);
             }
             catch (Exception)
             {
@@ -45,6 +58,6 @@ namespace WeatherWebAppCore.Service
 
         }
 
-       
+
     }
 }

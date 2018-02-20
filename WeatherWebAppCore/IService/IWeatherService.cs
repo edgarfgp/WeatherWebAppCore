@@ -6,13 +6,10 @@ using WeatherWebAppCore.Models;
 
 namespace WeatherWebAppCore.IService
 {
-   public  interface IWeatherService
+    public interface IWeatherService
     {
         Task<List<City>> GetCities();
         void CreateCity(CityDto cityDto);
-
-
-
-
+        Task<City> GetCityById(Guid id);
     }
 }

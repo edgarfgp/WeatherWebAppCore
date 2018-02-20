@@ -28,7 +28,7 @@ namespace WeatherWebAppCore.Controllers
 
 
         }
-
+        [HttpGet()]
         public async Task<IActionResult> Index()
         {
             ViewBag.Title = "Home";
@@ -43,20 +43,35 @@ namespace WeatherWebAppCore.Controllers
                 var citiesFromApi = await weatherService.GetCities();
                 homeViewModel = new HomeViewModel
                 {
-                    Title = "Cities",
+
+                    Title = "Countries",
                     Message = "THE CACHE IS EXPIRED",
                     Cities = citiesFromApi
 
                 };
 
                 memoryCache.Set(cacheKey, homeViewModel, new MemoryCacheEntryOptions()
-                .SetAbsoluteExpiration(DateTimeOffset.Now.AddSeconds(20))
-                .RegisterPostEvictionCallback((key, value, reason, state) => 
-                {
-                    logger.LogInformation($"Esto es una prueba{key}----{value}---{reason}---{state}");
-                }));
+                .SetAbsoluteExpiration(DateTimeOffset.Now.AddSeconds(5)));
                 return View(homeViewModel);
             }
+
+        }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var city = await weatherService.GetCityById(id);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            var detailViewModel = new DetailViewModel
+            {
+                CityDetail = city
+            };
+
+            return View(detailViewModel);
 
         }
 

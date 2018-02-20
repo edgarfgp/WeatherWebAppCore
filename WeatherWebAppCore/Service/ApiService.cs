@@ -53,6 +53,37 @@ namespace WeatherWebAppCore.Service
 
         }
 
+        public async Task<T> GetApi<T>(Guid id)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    Debug.WriteLine($">>> Get {ROOT}/{id} ");
+                    var response = await client.GetAsync($"{ROOT}/{id}");
+                    Debug.WriteLine($"<<< Get {ROOT}/{id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        var result = JsonConvert.DeserializeObject<T>(content);
+                        return result;
+
+
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public async Task<bool> PostAsync<T>(T t)
         {

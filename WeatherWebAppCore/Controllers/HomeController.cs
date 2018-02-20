@@ -59,6 +59,7 @@ namespace WeatherWebAppCore.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
+            ViewBag.Title = "Detail View";
             var city = await weatherService.GetCityById(id);
 
             if (city == null)
